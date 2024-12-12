@@ -42,6 +42,11 @@ def display_lake(lake)
 end
 
 def coordValid(lake, x, y)
+  return true if
+  0.upto(lake.length-1) do |i|
+    0.upto(lake.length-1) do |j|
+      if j==y && i==x
+  
   false
 end
 
