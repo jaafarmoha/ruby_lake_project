@@ -112,8 +112,25 @@ def waveSim(lake)
 end
 
 def gradient(lake, x, y, dx, dy)
-  0
+  return 0 unless coordValid(lake, x, y) && lake[y][x] < 0
+    forward_x = x + dx
+    forward_y = y + dy
+    backward_x = x - dx
+    backward_y = y - dy
+    unless coordValid(lake, forward_x, forward_y) && coordValid(lake, backward_x, backward_y)
+      return 0
+    end
+
+      forward_cell = lake[forward_y][forward_x]
+      backward_cell = lake[backward_y][backward_x]
+
+      if forward_cell > 0 && backward_cell > 0
+        return (forward_cell - backward_cell).abs
+      end
+  end
+  return 0
 end
+
 
 def crush(lake, strength)
 end
@@ -154,4 +171,4 @@ if __FILE__ == $PROGRAM_NAME
   #		display_lake(lake)
   #	end
 end
-end
+
