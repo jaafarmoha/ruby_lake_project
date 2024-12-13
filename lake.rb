@@ -51,7 +51,21 @@ end
 
 
 def flow(lake, dx, dy, wind)
- end
+  (0...lake.length).each do |y|
+    (0...lake.length).each do |x|
+      if coordValid(lake, x + dx, y + dy) then
+        if lake[y][x] > 0 && lake[y+dy] [x+dx] >= 0 then
+          heightDiff = (lake[y][x] - lake[y + dy][x + dx]) + wind
+          if heightDiff > 0 then 
+            flow = 1 + heightDiff/4
+            lake[y][x] -= flow
+            lake[y + dy][x + dx] += flow
+          end
+        end
+      end
+    end
+  end
+end
 
 
 def waveOverBlocks(lake, x, y, dx, dy)
