@@ -133,7 +133,32 @@ end
 
 
 def crush(lake, strength)
-end
+  (0...lake.length).each do |y|
+    (0...lake.length).each do |x|
+      if lake[y][x] < 0
+        height = lake[y][x].abs
+      end
+      max_pressure = 0
+      most_stressed = nil
+       
+      lr_gradient = gradient(lake, x, y, 1, 0) 
+        up_gradient = gradient(lake, x, y, 0, 1) 
+
+        pressure = [lr_gradient, up_gradient].max
+        if pressure > strength * height && pressure > max_pressure
+          max_pressure = pressure
+          most_stressed = [x, y]
+        end
+      end
+    end
+  end
+  if most_stressed
+    x, y = most_stressed
+    lake[y][x] = 0
+  end
+ return most_stressed
+
+
 
 def runSimulation(lake, steps, wind, strength)
   0.upto(steps - 1) do
@@ -153,11 +178,11 @@ if __FILE__ == $PROGRAM_NAME
   #		display_lake(lake)
   #	end
 
-  lake = LAKE2
-  0.upto(5) do
-	runSimulation(lake,1,0,8)
-  display_lake(lake)
-  end
+ # lake = LAKE2
+ # 0.upto(5) do
+	#runSimulation(lake,1,0,8)
+  #display_lake(lake)
+  #end
 
   # lake = LAKE2
   #	0.upto(5) do
