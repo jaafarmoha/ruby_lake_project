@@ -68,8 +68,31 @@ def flow(lake, dx, dy, wind)
 end
 
 
+
 def waveOverBlocks(lake, x, y, dx, dy)
- end
+  tallestBlock = 0
+  if lake[y][x] > 0 then
+    (0...lake.length).each do |s|
+      newX = x + s * dx 
+      newY = y + s * dy
+      nextCell = lake[newY][newX]
+      if !coordValid(lake, newX, newY) then
+        break
+      end
+        if nextCell < 0 then
+          tallestBlock = [tallestBlock, nextCell.abs].max
+        elsif nextCell >= 0 && lake[y][x] - nextCell > 0 then
+          heightDiff = (lake[y][x] - tallestBlock)
+          if heightDiff > 0 then
+            flow = heightDiff/4
+            if flow > 0 then
+              lake[y][x] -= flow
+              lake[newY][newX] += flow
+            end
+          end 
+        end
+     end
+  end
 
 
 def waveSim(lake)
@@ -130,4 +153,5 @@ if __FILE__ == $PROGRAM_NAME
   #		runSimulation(lake,1,4,2)
   #		display_lake(lake)
   #	end
+end
 end
