@@ -42,7 +42,12 @@ def display_lake(lake)
 end
 
 def coordValid(lake, x, y)
- end
+  if y < 0 || y >= lake.length || x < 0 || x >= lake[0].length 
+    then return false
+  else
+     true
+  end
+end
 
 
 def flow(lake, dx, dy, wind)
